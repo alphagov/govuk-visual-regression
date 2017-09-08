@@ -21,8 +21,8 @@ gallery:
 paths:
 
 domains:
-  production: https://www-origin.publishing.service.gov.uk
-  staging: https://www-origin.staging.publishing.service.gov.uk
+  production: https://www.gov.uk
+  master: https://government-frontend.herokuapp.com
 
 # Use TLS v1 when requesting https://www.gov.uk/… from within the VM
 # Ignore SSL errors when accessing staging

@@ -49,7 +49,7 @@ namespace :config do
   end
 end
 
-namespace heroku: do
+namespace :heroku do
   desc "Checks that dependencies are in place on Heroku"
   task pre_flight_check: ['config:pre_flight_check'] do
     dependencies_present = true
@@ -68,9 +68,16 @@ namespace heroku: do
     end
   end
 
-  desc "Install surge for uploading visual regression results"
-  task install_surge: ['heroku:pre_flight_check'] do
-    surge_available = %x[ which surge ]
-    exec("yarn global add surge") unless surge_available
+  # desc "Install surge for uploading visual regression results"
+  # task install_surge: ['heroku:pre_flight_check'] do
+  #   surge_available = %x[ which surge ]
+  #   exec("yarn global add surge") unless surge_available
+  # end
+
+  desc 'Set env var `DOCUMENT_TYPE` to compare most popular documents'
+  task document_type: ['heroku:pre_flight_check'] do |_t, args|
+    document_type = ENV.fetch("DOCUMENT_TYPE")
+    paths = GovukVisualRegression::VisualDiff::DocumentTypes.new.type_paths(document_type)
+    GovukVisualRegression::VisualDiff::HerokuRunner.new(paths: paths).run
   end
 end
