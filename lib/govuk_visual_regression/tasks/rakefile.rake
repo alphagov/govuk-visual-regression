@@ -47,10 +47,11 @@ namespace :config do
       abort("ERROR: A required dependency is not installed")
     end
   end
+end
 
+namespace heroku: do
   desc "Checks that dependencies are in place on Heroku"
-  task pre_flight_check_heroku: ['config:pre_flight_check'] do
-    puts "Checking required packages available on Heroku"
+  task pre_flight_check: ['config:pre_flight_check'] do
     dependencies_present = true
     { yarn: 'yarn' }.each do |package, binary|
       print "#{package}..... "
@@ -65,5 +66,11 @@ namespace :config do
     unless dependencies_present
       abort("ERROR: A required dependency is not installed")
     end
+  end
+
+  desc "Install surge for uploading visual regression results"
+  task install_surge: ['heroku:pre_flight_check'] do
+    surge_available = %x[ which surge ]
+    exec("yarn global add surge") unless surge_available
   end
 end
