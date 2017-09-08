@@ -2,13 +2,21 @@ require 'yaml'
 require 'open-uri'
 require "govuk_visual_regression"
 
-def paths
+def load_paths
   YAML.load(open(ENV.fetch("URI")))
 end
 
 namespace :diff do
-  desc 'produce visual diffs - set env var `URI` with location of a yaml file containing paths to diff'
-  task visual: ['config:pre_flight_check'] do
+  desc 'Set env var `URI` with location of a yaml file containing paths to diff'
+  task visual: ['config:pre_flight_check'] do |_t, args|
+    GovukVisualRegression::VisualDiff::Runner.new(paths: load_paths).run
+  end
+
+  desc 'Set env var `DOCUMENT_TYPE` to compare most popular documents'
+  task document_type: ['config:pre_flight_check'] do |_t, args|
+    document_type = ENV.fetch("DOCUMENT_TYPE")
+    paths = GovukVisualRegression::VisualDiff::DocumentTypes.new.type_paths(document_type)
+
     GovukVisualRegression::VisualDiff::Runner.new(paths: paths).run
   end
 
