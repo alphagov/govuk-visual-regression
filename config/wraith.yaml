@@ -1,17 +1,34 @@
 ---
 browser:
   phantomjs: phantomjs
+
 directory: results/visual
 screen_widths:
-- 1024
-mode: diffs_first # change this to diffs_only when not dev'ing
+  - 320x5000
+  - 600x4000
+  - 1080x3000
+resize_or_reload: 'resize'
+mode: diffs_first
 fuzz: 5%
 threshold: 5
 num_threads: 4
 timeout_ms: 2000
-# These paths will be populated by GovukVisualRegression::Pages::VisualDiff::Runner
+gallery:
+  thumb_width:  300
+  thumb_height: 300
+
+# These paths will be populated by GovukVisualRegression::VisualDiff::Runner
 paths:
+
 domains:
   production: https://www-origin.publishing.service.gov.uk
   staging: https://www-origin.staging.publishing.service.gov.uk
+
+# Use TLS v1 when requesting https://www.gov.uk/… from within the VM
+# Ignore SSL errors when accessing staging
+# Stops "Error with page" problems
+#
+# PhantomJS depends on the system OpenSSL library.
+# http://phantomjs.org/api/command-line.html
+# Default is SSLv3
 phantomjs_options: "--ssl-protocol=tlsv1 --ignore-ssl-errors=true"
