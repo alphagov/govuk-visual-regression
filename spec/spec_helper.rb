@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require 'govuk_visual_regression/pages'
+require 'govuk_visual_regression'
 require 'pry'
 
 module FixtureHelper

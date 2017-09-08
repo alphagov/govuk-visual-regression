@@ -1,6 +1,6 @@
 require 'yaml'
 require 'open-uri'
-require "govuk_visual_regression/pages"
+require "govuk_visual_regression"
 
 def paths
   YAML.load(open(ENV.fetch("URI")))
@@ -9,14 +9,14 @@ end
 namespace :diff do
   desc 'produce visual diffs - set env var `URI` with location of a yaml file containing paths to diff'
   task visual: ['config:pre_flight_check'] do
-    GovukVisualRegression::Pages::VisualDiff::Runner.new(paths: paths).run
+    GovukVisualRegression::VisualDiff::Runner.new(paths: paths).run
   end
 
   desc "clears the results directory"
   task :clear_results do
     puts "---> Clearing results directory"
     require 'fileutils'
-    FileUtils.remove_dir GovukVisualRegression::Pages.results_dir
+    FileUtils.remove_dir GovukVisualRegression.results_dir
   end
 end
 

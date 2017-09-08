@@ -1,8 +1,8 @@
-describe GovukVisualRegression::Pages::VisualDiff::Runner do
+describe GovukVisualRegression::VisualDiff::Runner do
   describe "#run" do
     let(:kernel) { double }
     let(:input_paths) { FixtureHelper.load_paths_from("test_paths.yaml") }
-    let(:config_handler_klass) { GovukVisualRegression::Pages::VisualDiff::WraithConfig }
+    let(:config_handler_klass) { GovukVisualRegression::VisualDiff::WraithConfig }
     let(:config_handler) { config_handler_klass.new(paths: input_paths) }
 
     before do

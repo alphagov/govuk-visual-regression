@@ -1,4 +1,4 @@
-describe GovukVisualRegression::Pages::VisualDiff::WraithConfig do
+describe GovukVisualRegression::VisualDiff::WraithConfig do
   describe "config write and cleanup" do
     it "writes out a wraith config with the specified paths, and cleans up after" do
       wraith_config = described_class.new(paths: %w{foo bar })
