@@ -47,4 +47,23 @@ namespace :config do
       abort("ERROR: A required dependency is not installed")
     end
   end
+
+  desc "Checks that dependencies are in place on Heroku"
+  task pre_flight_check_heroku: ['config:pre_flight_check'] do
+    puts "Checking required packages available on Heroku"
+    dependencies_present = true
+    { yarn: 'yarn' }.each do |package, binary|
+      print "#{package}..... "
+      result = %x[ which #{binary} ]
+      if result.empty?
+        puts "Not found"
+        dependencies_present = false
+      else
+        puts "OK"
+      end
+    end
+    unless dependencies_present
+      abort("ERROR: A required dependency is not installed")
+    end
+  end
 end

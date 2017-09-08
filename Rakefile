@@ -1,4 +1,4 @@
-require "rspec/core/rake_task"
+require "rspec/core/rake_task" if defined?(Rspec)
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
