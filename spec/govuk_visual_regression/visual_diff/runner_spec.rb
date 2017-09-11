@@ -12,12 +12,12 @@ describe GovukVisualRegression::VisualDiff::Runner do
     end
 
     it "executes wraith with the appropriate config" do
-      expect(config_handler_klass).to receive(:new).with(paths: ["/government/stats/foo", "/government/stats/bar"], review_domain: 'review', live_domain: nil)
+      expect(config_handler_klass).to receive(:new).with(paths: ["/government/stats/foo", "/government/stats/bar"], review_domain: nil)
       expect(config_handler).to receive(:write)
       expect(kernel).to receive(:system).with("wraith capture #{config_handler.location}")
       expect(config_handler).to receive(:delete)
 
-      expect { described_class.new(paths: input_paths, review_domain: 'review', kernel: kernel).run }.to output(
+      expect { described_class.new(paths: input_paths, kernel: kernel).run }.to output(
         "---> Creating Visual Diffs\n" +
         "running: wraith capture #{config_handler.location}\n"
       ).to_stdout

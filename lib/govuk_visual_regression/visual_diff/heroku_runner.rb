@@ -6,7 +6,8 @@ module GovukVisualRegression
       end
 
       def upload_to_surge
-        @kernel.system "surge --project results/visual/ --domain govuk-vr.surge.sh"
+        surge_domain = @environment ? @environment : "govuk-vr"
+        @kernel.system "surge --project results/visual/ --domain #{surge_domain}.surge.sh"
       end
 
       def run

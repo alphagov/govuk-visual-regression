@@ -13,8 +13,6 @@ post '/run' do
   end
 
   environment = payload['deployment']['environment']
-  review_domain = "https://#{environment}.herokuapp.com"
-
   paths = GovukVisualRegression::VisualDiff::DocumentTypes.new.type_paths('statistics')
-  GovukVisualRegression::VisualDiff::Runner.new(paths: paths, review_domain: review_domain).run
+  GovukVisualRegression::VisualDiff::HerokuRunner.new(paths: paths, environment: environment).run
 end
