@@ -11,5 +11,16 @@ describe GovukVisualRegression::VisualDiff::WraithConfig do
       wraith_config.delete
       expect(File.exist? wraith_config.location).to be false
     end
+
+    it "ignores paths containing the word path" do
+      wraith_config = described_class.new(paths: %w{/foo /foo/bar /some/path })
+      wraith_config.write
+
+      config_data = YAML.load_file wraith_config.location
+      expect(config_data["paths"].values).to match_array %w{/foo /foo/bar}
+
+      wraith_config.delete
+      expect(File.exist? wraith_config.location).to be false
+    end
   end
 end

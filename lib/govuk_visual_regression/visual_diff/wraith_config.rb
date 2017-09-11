@@ -14,7 +14,7 @@ module GovukVisualRegression
       def write
         config_template = YAML.load_file GovukVisualRegression.wraith_config_template
         wraith_formatted_paths = @paths.each_with_object({}) do |path, hash|
-          hash[SecureRandom.uuid] = path
+          hash[SecureRandom.uuid] = path unless path_would_break_wraith?(path)
         end
         config_template["paths"] = wraith_formatted_paths
         wraith_config = File.new(location, "w")
@@ -24,6 +24,13 @@ module GovukVisualRegression
 
       def delete
         File.unlink location
+      end
+
+      # TODO: Remove when Wraith patched
+      # Paths containing "path" in them break Wraith:
+      # https://github.com/BBC-News/wraith/issues/536
+      def path_would_break_wraith?(path)
+        path.include?('path')
       end
     end
   end
