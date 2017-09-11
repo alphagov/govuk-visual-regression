@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'sinatra'
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'govuk_visual_regression'
 set :bind, '0.0.0.0'
 
 post '/run' do
@@ -10,6 +12,9 @@ post '/run' do
     status 400
   end
 
-  puts request.body
-  puts payload
+  environment = payload['deployment']['environment']
+  review_domain = "https://#{environment}.herokuapp.com"
+
+  paths = GovukVisualRegression::VisualDiff::DocumentTypes.new.type_paths('statistics')
+  GovukVisualRegression::VisualDiff::Runner.new(paths: paths, review_domain: review_domain).run
 end
