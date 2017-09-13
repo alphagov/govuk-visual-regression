@@ -6,6 +6,14 @@ def load_paths
   YAML.load(open(ENV.fetch("URI")))
 end
 
+def review_domain
+  ENV.fetch("REVIEW_DOMAIN")
+end
+
+def live_domain
+  ENV.fetch("LIVE_DOMAIN")
+end
+
 namespace :diff do
   desc 'Set env var `URI` with location of a yaml file containing paths to diff'
   task visual: ['config:pre_flight_check'] do |_t, args|
@@ -20,11 +28,28 @@ namespace :diff do
     GovukVisualRegression::VisualDiff::Runner.new(paths: paths).run
   end
 
+  desc 'Set env var `REVIEW_DOMAIN` to the domain hosting the newer component guide and `LIVE_DOMAIN` to compare with'
+  task component_guide: ['spider:component_guide'] do |_t, args|
+    paths = GovukVisualRegression::VisualDiff::SpiderPaths.component_preview_paths
+    if paths.any?
+      GovukVisualRegression::VisualDiff::Runner.new(paths: paths, review_domain: review_domain, live_domain: live_domain).run
+    else
+      puts "No paths found"
+    end
+  end
+
   desc "clears the results directory"
   task :clear_results do
     puts "---> Clearing results directory"
     require 'fileutils'
     FileUtils.remove_dir GovukVisualRegression.results_dir
+  end
+end
+
+namespace :spider do
+  desc 'Set env var `REVIEW_DOMAIN` to the domain hosting the component guide'
+  task component_guide: ['config:pre_flight_check'] do |_t, args|
+    GovukVisualRegression::VisualDiff::Runner.new(review_domain: review_domain).spider_component_guide
   end
 end
 

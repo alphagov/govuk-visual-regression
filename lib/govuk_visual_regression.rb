@@ -13,6 +13,10 @@ module GovukVisualRegression
     config_file 'wraith.yaml'
   end
 
+  def self.spider_paths
+    config_file 'spider_paths.yml'
+  end
+
   def self.config_file(filename)
     File.expand_path(root_dir + "/config/#{filename}")
   end

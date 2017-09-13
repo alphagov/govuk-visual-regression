@@ -1,5 +1,4 @@
 require 'yaml'
-require 'securerandom'
 
 module GovukVisualRegression
   module VisualDiff
@@ -9,11 +8,11 @@ module GovukVisualRegression
       attr_reader :review_domain
       attr_reader :live_domain
 
-      def initialize(paths:, review_domain: nil, live_domain: nil)
+      def initialize(paths: [], review_domain: nil, live_domain: nil)
         @paths = paths
         @live_domain = live_domain
         @review_domain = review_domain
-        @location = GovukVisualRegression.config_file("tmp_wraith_config.yaml")
+        @location = GovukVisualRegression.config_file(temporary_config_file_name)
       end
 
       def config
@@ -50,6 +49,10 @@ module GovukVisualRegression
 
       def path_config_name(path)
         path.gsub('/', '_')
+      end
+
+      def temporary_config_file_name
+        "tmp_wraith_config.yaml"
       end
     end
   end
