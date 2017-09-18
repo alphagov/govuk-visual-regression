@@ -50,6 +50,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.2.0)
     minitest (5.10.3)
+    mustermann (1.0.1)
     netrc (0.11.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
@@ -65,6 +66,8 @@ GEM
       byebug (~> 9.1)
       pry (~> 0.10)
     rack (2.0.3)
+    rack-protection (2.0.0)
+      rack
     rack-proxy (0.6.2)
       rack
     rack-test (0.7.0)
@@ -113,9 +116,15 @@ GEM
     scss_lint (0.44.0)
       rake (~> 10.0)
       sass (~> 3.4.15)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
     slop (3.6.0)
     thor (0.20.0)
     thread_safe (0.3.6)
+    tilt (2.0.8)
     tins (1.6.0)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
@@ -145,8 +154,12 @@ DEPENDENCIES
   rake (~> 10.0)
   rest-client
   rspec (~> 3.6)
+  sinatra
   webpacker
   wraith (~> 4.0)
+
+RUBY VERSION
+   ruby 2.3.1p112
 
 BUNDLED WITH
    1.15.1

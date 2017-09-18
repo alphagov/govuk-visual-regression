@@ -5,7 +5,6 @@ browser:
 directory: results/visual
 screen_widths:
   - 320x5000
-  - 600x4000
   - 1080x3000
 resize_or_reload: 'resize'
 mode: diffs_first
@@ -20,9 +19,10 @@ gallery:
 # These paths will be populated by GovukVisualRegression::VisualDiff::Runner
 paths:
 
+# Domains can be overwritten by GovukVisualRegression::VisualDiff::Runner
 domains:
-  production: https://www.gov.uk
-  master: https://government-frontend.herokuapp.com
+  live: https://www.gov.uk
+  review: https://government-frontend.herokuapp.com
 
 # Use TLS v1 when requesting https://www.gov.uk/… from within the VM
 # Ignore SSL errors when accessing staging

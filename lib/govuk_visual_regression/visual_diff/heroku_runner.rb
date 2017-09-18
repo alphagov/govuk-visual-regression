@@ -1,12 +1,20 @@
 module GovukVisualRegression
   module VisualDiff
     class HerokuRunner < Runner
+      def initialize(paths: [], review_domain: nil, live_domain: nil, surge_domain: nil, kernel: Kernel)
+        @paths = paths
+        @kernel = kernel
+        @review_domain = review_domain
+        @live_domain = live_domain
+        @surge_domain = surge_domain
+      end
+
       def install_surge
         @kernel.system "yarn global add surge"
       end
 
       def upload_to_surge
-        @kernel.system "surge --project results/visual/ --domain govuk-vr.surge.sh"
+        @kernel.system "surge --project results/visual/ --domain #{@surge_domain}"
       end
 
       def run

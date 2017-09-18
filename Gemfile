@@ -1,5 +1,7 @@
 source "https://rubygems.org"
+ruby File.read(".ruby-version").chomp
 
+gem "sinatra"
 gem "wraith", "~> 4.0"
 gem "govuk-lint", "~> 0.8"
 gem "rake", "~> 10.0"
@@ -8,7 +10,7 @@ gem "json"
 
 # Yarn is only available to Ruby apps on Heroku with the webpacker gem
 # https://devcenter.heroku.com/changelog-items/1114
-gem "webpacker"
+gem "webpacker", require: false
 
 group :development, :test do
   gem "rspec", "~> 3.6"

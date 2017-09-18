@@ -1,3 +1,4 @@
 results/visual
 config/tmp*
+config/spider_paths*
 node_modules/
