@@ -17,7 +17,7 @@ end
 namespace :diff do
   desc 'Set env var `URI` with location of a yaml file containing paths to diff'
   task visual: ['config:pre_flight_check'] do |_t, args|
-    GovukVisualRegression::VisualDiff::Runner.new(paths: load_paths).run
+    GovukVisualRegression::VisualDiff::Runner.new(paths: load_paths, review_domain: review_domain, live_domain: live_domain).run
   end
 
   desc 'Set env var `DOCUMENT_TYPE` to compare most popular documents'
