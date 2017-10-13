@@ -48,7 +48,7 @@ module GovukVisualRegression
       end
 
       def path_config_name(path)
-        path.gsub('/', '_')
+        path.gsub(%r{[/&\?%]+}, '_')
       end
 
       def temporary_config_file_name
