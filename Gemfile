@@ -7,6 +7,8 @@ gem "govuk-lint", "~> 0.8"
 gem "rake", "~> 10.0"
 gem "rest-client"
 gem "json"
+gem "octokit", github: "octokit/octokit.rb"
+gem "jwt"
 
 # Yarn is only available to Ruby apps on Heroku with the webpacker gem
 # https://devcenter.heroku.com/changelog-items/1114
