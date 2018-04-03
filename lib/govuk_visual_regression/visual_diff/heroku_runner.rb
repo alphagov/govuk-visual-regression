@@ -10,11 +10,11 @@ module GovukVisualRegression
       end
 
       def install_surge
-        @kernel.system "yarn global add surge"
+        @kernel.system "yarn install"
       end
 
       def upload_to_surge
-        @kernel.system "surge --project results/visual/ --domain #{@surge_domain}"
+        @kernel.system "yarn surge --project results/visual/ --domain #{@surge_domain}"
       end
 
       def run
